@@ -28,12 +28,18 @@
                         <i [ngClass]="item.icon"></i>
                         <span class="hide-menu">
                             {{ item.titulo }}
-                            <span class="label label-rouded label-themecolor pull-right">{{ item.submenu.length }}</span>
+                            <span
+                                class="label label-rouded label-themecolor pull-right">{{ item.submenu.length }}</span>
                         </span>
                     </a>
                     <ul aria-expanded="false" class="collapse">
                         <li *ngFor="let subItem of item.submenu">
-                            <a [routerLink]="subItem.url">{{ subItem.titulo }} </a>
+                            <a 
+                                [routerLink]="subItem.url" 
+                                routerLinkActive="active"
+                                [routerLinkActiveOptions]="{ exact: true }">
+                                {{ subItem.titulo }}
+                            </a>
                         </li>
                     </ul>
                 </li>
