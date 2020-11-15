@@ -5,6 +5,12 @@
     animation-fill-mode: both;
 }
 
-#themecolors .selector{
+#themecolors .selector, .cursor{
     cursor: pointer;
+}
+
+#my-signin2 {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
 }
