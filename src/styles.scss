@@ -1,11 +1,16 @@
-.fast{
-    -webkit-animation-duration: .3s;
-    animation-duration: .3s;
+/* html{
+    filter: invert(1) hue-rotate(180deg);
+} */
+
+.fast {
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
     -webkit-animation-fill-mode: both;
     animation-fill-mode: both;
 }
 
-#themecolors .selector, .cursor{
+#themecolors .selector,
+.cursor {
     cursor: pointer;
 }
 
@@ -13,4 +18,9 @@
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
+}
+
+.img-avatar{
+    width: 200px;
+    height: 200px;
 }
