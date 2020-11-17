@@ -15,14 +15,16 @@ export class Usuario {
     }
 
     get imagenUrl() {
-        if (this.img && this.img.includes('https')) {
+        if (!this.img) {
+            return `${base_url}/uploads/usuarios/no-image}`;
+        } else if (this.img.includes('https')) {
             return this.img;
-        }
-        // /uploads/medicos/f05e9f85-a102-4caa-8e46-4a5ccd899726.jpg
-        if (this.img) {
+        } else if (this.img) {
             return `${base_url}/uploads/usuarios/${this.img}`;
         } else {
             return `${base_url}/uploads/usuarios/no-image}`;
         }
+        // /uploads/medicos/f05e9f85-a102-4caa-8e46-4a5ccd899726.jpg
+
     }
 }

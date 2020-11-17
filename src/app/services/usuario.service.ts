@@ -1,13 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { tap, map, catchError } from 'rxjs/operators';
+import { tap, map, catchError, delay } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Observable, of } from 'rxjs';
 
 import { RegisterForm } from '../interfaces/register-form.interface';
 import { LoginForm } from '../interfaces/login-form.interface';
-import { Usuario } from '../models/usuario.model';
+import { Usuario } from 'src/app/models/usuario.model';
+import { CargarUsuario } from '../interfaces/cargar-usuarios.interface';
 
 const base_url = environment.base_url;
 declare const gapi: any;
@@ -36,13 +37,17 @@ export class UsuarioService {
     return this.usuario.uid || '';
   }
 
-  validarToken(): Observable<boolean> {
-
-    return this.http.get(`${base_url}/login/renew`, {
+  get headers() {
+    return {
       headers: {
         'x-token': this.token
       }
-    })
+    };
+  }
+
+  validarToken(): Observable<boolean> {
+
+    return this.http.get(`${base_url}/login/renew`, this.headers)
       .pipe(
         map((res: any) => {
           const {
@@ -90,11 +95,7 @@ export class UsuarioService {
       role: this.usuario.role
     }
 
-    return this.http.put(`${base_url}/usuarios/${this.uid}`, data, {
-      headers: {
-        'x-token': this.token
-      }
-    })
+    return this.http.put(`${base_url}/usuarios/${this.uid}`, data, this.headers);
   }
 
   login(formData: LoginForm) {
@@ -121,5 +122,33 @@ export class UsuarioService {
         this.router.navigateByUrl('/login');
       });
     });
+  }
+
+  cargarUsuarios(desde: number = 0) {
+    const url = `${base_url}/usuarios?desde=${desde}`;
+    return this.http.get<CargarUsuario>(url, this.headers)
+      .pipe(
+        delay(200),
+        map(res => {
+
+          const usuarios = res.usuarios.map(
+            user => new Usuario(user.nombre, user.email, '', user.google, user.img, user.role, user.uid));
+          return {
+            total: res.total,
+            usuarios
+          };
+        })
+      );
+  }
+
+  eliminarUsuario(usuario: Usuario) {
+    console.log('Eliminando');
+    // http://localhost:3005/api/usuarios/5fa889eee6a2e622f47929ae
+    const url = `${base_url}/usuarios/${usuario.uid}`;
+    return this.http.delete(url, this.headers);
+  }
+
+  cambiarUsuario(usuario: Usuario) {
+    return this.http.put(`${base_url}/usuarios/${usuario.uid}`, usuario, this.headers);
   }
 }
