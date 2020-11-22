@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { map } from 'rxjs/operators';
 import { Usuario } from 'src/app/models/usuario.model';
+import { Hospital } from 'src/app/models/hospital.model';
+import { Medico } from 'src/app/models/medico.model';
 
 const base_url = environment.base_url;
 
@@ -31,6 +33,12 @@ export class BusquedasService {
     return resultados.map(
       user => new Usuario(user.nombre, user.email, '', user.google, user.img, user.role, user.uid));
   }
+  private transformarHospitales(resultados: any): Hospital[] {
+    return resultados;
+  }
+  private transformarMedicos(resultados: any): Medico[] {
+    return resultados;
+  }
 
   buscar(
     tipo: 'usuarios' | 'medicos' | 'hospitales',
@@ -43,7 +51,10 @@ export class BusquedasService {
           switch (tipo) {
             case 'usuarios':
               return this.transformarUsuarios(res.resultados);
-
+            case 'hospitales':
+              return this.transformarHospitales(res.resultados);
+            case 'medicos':
+              return this.transformarMedicos(res.resultados);
             default:
               return [];
           }
