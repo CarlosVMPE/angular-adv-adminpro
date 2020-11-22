@@ -9,19 +9,27 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   styles: [
   ]
 })
-export class HeaderComponent{
+export class HeaderComponent {
 
   usuario: Usuario;
 
   constructor(
     private usuarioService: UsuarioService,
     private router: Router
-    ) {
-      this.usuario = usuarioService.usuario;
-    }
+  ) {
+    this.usuario = usuarioService.usuario;
+  }
 
-  logout(){
+  logout() {
     this.usuarioService.logout();
     this.router.navigateByUrl('/login');
+  }
+
+  buscar(termino: string) {
+    if (termino.length === 0) {
+      return;
+      // this.router.navigateByUrl('/dashboard');
+    }
+    this.router.navigateByUrl(`/dashboard/buscar/${termino}`);
   }
 }

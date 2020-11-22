@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class SidebarService {
 
-  menu: any [] = [
+  /* menu: any [] = [
     {
       titulo: 'Dashboards',
       icon: 'mdi mdi-gauge',
@@ -26,6 +26,19 @@ export class SidebarService {
         { titulo: 'Médicos', url: 'medicos' },
       ]
     }
-  ];
+  ]; */
+
+  menu = [];
+
+  cargarMenu(){
+    this.menu = JSON.parse(localStorage.getItem('menu')) || [];
+
+    // en caso no cuenten con opciones
+    // redireccionar al login
+    /* if(this.menu.length === 0){
+
+    } */
+  }
+
   constructor() { }
 }

@@ -106,9 +106,7 @@ export class UsuariosComponent implements OnInit, OnDestroy {
 
   cambiarRole(usuario: Usuario) {
     this.usuarioService.cambiarUsuario(usuario)
-      .subscribe(res => {
-        //console.log(res);
-      });
+      .subscribe(res => {});
   }
 
   abrirModal(usuario: Usuario) {

@@ -33,7 +33,6 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    console.log(this.loginForm.value);
     this.usuarioService.login(this.loginForm.value).subscribe(res => {
 
       if (this.loginForm.get('remember').value) {
@@ -72,7 +71,6 @@ export class LoginComponent implements OnInit {
     this.auth2.attachClickHandler(element, {},
       (googleUser) => {
         const id_token = googleUser.getAuthResponse().id_token;
-        console.log(id_token);
         this.usuarioService.loginGoogle(id_token).subscribe(res => {
           // Navegar al dashboard
           this.ngZone.run(() => {

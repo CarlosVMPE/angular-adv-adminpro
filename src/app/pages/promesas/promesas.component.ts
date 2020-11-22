@@ -25,9 +25,7 @@ export class PromesasComponent implements OnInit {
     })
     .catch( error => console.log('Error en mi promesa ', error));
     console.log('Fin del init'); */
-    this.getUsuarios().then(usuarios => {
-      console.log(usuarios);
-    });
+    this.getUsuarios().then(usuarios => {});
   }
 
   getUsuarios() {
